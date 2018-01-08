@@ -20,7 +20,7 @@ router.get('/getList', function (req, res, next) {
             " (select u_name from users as usr where usr.u_id = tr.u_id) as u_name," +
              "(select u_city from users as usr where usr.u_id = tr.u_id) as u_city," +
              "(select count(t_id) from likes as ll where ll.t_id = tr.t_id) as t_vote," +
-            "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, t_created_time from trips as tr");
+            "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, DATE_FORMAT(t_created_time,'%Y-%c-%d %H:%i') as t_created_time from trips as tr");
 
     } else {
          SQL = mysql.format("select t_id, u_id, (select u_avatar from users as usr where usr.u_id = tr.u_id) as u_avatar," +
@@ -28,7 +28,7 @@ router.get('/getList', function (req, res, next) {
              "(select u_city from users as usr where usr.u_id = tr.u_id) as u_city," +
              "(select count(t_id) from likes as ll where ll.t_id = tr.t_id) as t_vote," +
              " (select t_id from likes as ll where ll.u_id =? and ll.t_id = tr.t_id) as u_like," +
-            "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, t_created_time from trips as tr", [req.param('u_id')]);
+            "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, DATE_FORMAT(t_created_time,'%Y-%c-%d %H:%i') as t_created_time from trips as tr", [req.param('u_id')]);
 
     }
 
@@ -49,7 +49,7 @@ router.get('/getListbyUID', function (req, res, next) {
         " (select u_name from users as usr where usr.u_id = tr.u_id) as u_name," +
         "(select u_city from users as usr where usr.u_id = tr.u_id) as u_city," +
         "(select count(t_id) from likes as ll where ll.t_id = tr.t_id) as t_vote," +
-        "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, t_created_time from trips as tr where tr.u_id = ?",[req.param('u_id')]);
+        "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, DATE_FORMAT(t_created_time,'%Y-%c-%d %H:%i') as t_created_time from trips as tr where tr.u_id = ?",[req.param('u_id')]);
 
     connection.query(SQL, function (err, result) {
         if(err) {
@@ -67,7 +67,7 @@ router.get('/getLikeListbyUID', function (req, res, next) {
         " (select u_name from users as usr where usr.u_id = tr.u_id) as u_name," +
         "(select u_city from users as usr where usr.u_id = tr.u_id) as u_city," +
         "(select count(t_id) from likes as ll where ll.t_id = tr.t_id) as t_vote," +
-        "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, t_created_time from trips as tr where tr.t_id in (select t_id from likes as ll where ll.u_id =?)", [req.param('u_id')]);
+        "t_view, t_title, t_content, t_pic1, t_pic2, t_pic3, t_location, DATE_FORMAT(t_created_time,'%Y-%c-%d %H:%i') as t_created_time from trips as tr where tr.t_id in (select t_id from likes as ll where ll.u_id =?)", [req.param('u_id')]);
 
 
     connection.query(SQL, function (err, result) {

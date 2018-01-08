@@ -36,7 +36,7 @@ router.get('/getNews',  function (req, res, next) {
 
     var SQL = mysql.format("select n_id, (select u_avatar from users where u_id = nw.n_from) as n_avatar," +
         " (select u_name from users where u_id = nw.n_from ) as n_from," +
-        "(select u_name from users where u_id = nw.n_to) as n_to, n_type, n_content, n_created_time, n_created_by, n_updated_time, n_updated_by from news as nw where nw.n_to = ?", [req.param('n_to')]);
+        "(select u_name from users where u_id = nw.n_to) as n_to, n_type, n_content, DATE_FORMAT(n_created_time,'%Y-%c-%d %H:%i') as n_created_time, n_created_by, n_updated_time, n_updated_by from news as nw where nw.n_to = ?", [req.param('n_to')]);
 
     connection.query(SQL, function (err, result) {
         if(err) {
