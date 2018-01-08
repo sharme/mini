@@ -32,6 +32,7 @@ router.post('/add',  function (req, res, next) {
 });
 
 
+
 router.get('/getNews',  function (req, res, next) {
 
     var SQL = mysql.format("select n_id, (select u_avatar from users where u_id = nw.n_from) as n_avatar," +
